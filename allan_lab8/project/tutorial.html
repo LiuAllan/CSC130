@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thimble Project Tutorial</title>
+    <link rel="stylesheet" type="text/css" href="https://thimble.mozilla.org/tutorial/tutorial.css">
+  </head>
+
+  <body>
+    <div class="tutorial">
+      <h1>CSC 130 Lab 8</h1>
+      <p>
+        In this tutorial, you will make your first AJAX requests: using Yelp's API and the browser geolocation, you will make a search for local businesses on Yelp, and show the results in a list, like this:
+      </p>
+      <img width="50%" src="lab8_result.png">
+      <h3>Step-by-Step Instructions</h3>
+      <p>
+        As with the previous assignment, you shouldn't modify the <code>index.html</code> file.
+      </p>
+      <ol class="steps">
+        <li>
+          <strong>Get your Yelp access token.</strong>
+          <p>
+            To be able to sent requests to Yelp, you need an access token (so that Yelp can prevent abuse of the API). If you paid attention to the last lecture, this part should be easy:
+          </p>
+          <ol>
+            <li>Go to the <a href="https://www.yelp.ca/developers/documentation/v3/get_started">get started tutorial</a> of the Yelp API documentation.</li>
+            <li>Carefully read the Authentication section. To send the POST request on step 2, you should install and use the <a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop">Postman</a> chrome application. If you follow carefully the text on step 2 of the Yelp documentation you should end up with the following Postman configuration:
+            <img src="postman_yelp.png" width="100%">
+            Replace the client id and secret with the ones you obtained in the first step, and hit the send button.
+            </li>
+            <li>The response should contain an access token: copy this access token in the <code>ACCESS_TOKEN</code> variable that is on the first line of your JavaScript code.</li>
+          </ol>
+        </li>
+        <li>
+          <strong>First request to Yelp.</strong>
+          <p>
+          Now that you have an access token, you can try it out with Postman. Go look at the <a href="https://www.yelp.ca/developers/documentation/v3/business_search">documentation of the search endpoint</a>: the "Request" section tells you the type of HTTP request you need to send (GET), and the URL; the "Parameters" section gives you the list of parameters that are passed in the URL query string, most are optional, but some are required.
+          </p>
+          <p>
+            Let's try a sample request with Postman: make a GET request with the following URL: <code>https://api.yelp.com/v3/businesses/search?term=Pub&latitude=37.78&longitude=-122.39</code>, which should return a list of pubs around San Francisco. If you hit send, you should receive a response with an error code of <code>401</code>, which means that you are not authorized to get the data. That's normal, we forgot to add the access token.
+          </p>
+          <p>
+            In Postman, add a header to the request: the header key should be <code>Authorization</code> and the value should be <code>Bearer yourToken</code> (replace <code>yourToken</code> by the actual access token), like this:
+            <img src="postman_yelp_search.png" width="100%">
+          </p>
+          <p>
+            This time if you hit send, you should receive a response: and object with a property named <code>businesses</code> (among other things).
+          </p>
+        </li>
+        <li>
+          <strong>Override browser geolocation if needed.</strong>
+          <p>
+            Back to Thimble. If the message <code>Waiting for GPS coordinates...</code> is still visible in the preview a few seconds after loading the page, it means that for some reason your browser is not able to get any GPS coordinates. You can override this in the Chrome developer tools. Look at the article on the <a href="https://developers.google.com/web/tools/chrome-devtools/device-mode/device-input-and-sensors">Chrome developers website</a> to see how to do this. As soon as you set a geolocation, the message should disappear and the search button should be enabled.
+          </p>
+        </li>
+        <li>
+          <strong>Make the AJAX request</strong>
+          <p>
+            Now let's do the same thing in JavaScript. As you can see, a fair bit of code is already there. Apart from the first line where you should have added your access token, you shouldn't modify anything above line 32. If you're not sure what to do during this step, look at the <a href="https://thimbleprojects.org/mfoucault/225104/">AJAX demo</a> I did last week.
+          </p>
+          <p>
+            In the <code>requestSearch</code> function, you will need to create a <code>requestSettings</code> object that contains our request settings, and then use the <code>jQuery.ajax()</code> function to send the request. The settings object can contain many things (see <a href="http://api.jquery.com/jQuery.ajax/#jQuery-ajax-settings">the jQuery documentation</a> for a complete list). In our case, we need to:
+          </p>
+          <ul>
+            <li>call the <code>searchSuccess</code> function when the response is a <code>success</code></li>
+            <li>call the <code>searchError</code> function when the response is an <code>error</code></li>
+            <li>set the query string parameters. You can either append them to the URL, or set the <code>data</code> attribute in the <code>requestSetting</code> object. The data attribute should be an object that contains key/value pairs, like this:
+<code style="display:block;white-space:pre-wrap">var requestSettings = { 
+  data: { 
+      k1: v1, 
+      k2: v2 
+  },
+  ...
+}</code>
+              The keys and values should match what is described in the Yelp API
+            </li>
+            <li>
+              set the <code>Authorization</code> header (with the same value as in step 2), using the <code>headers</code> attribute in the settings. The <code>headers</code> attribute has the same structure as <code>data</code>, i.e., an object containing key/value pairs.
+            </li>
+          </ul>
+          <p>
+            Once you set the correct values for the data (term, latitude and longitude) and headers (Authorization), the last thing to add to this function is the code that sends the request, with the <code>jQuery.ajax()</code> function. The first parameter of that request should be the url (which is conveniently stored for you in the <code>SEARCH_ENDPOINT</code> variable), and the second should be the request settings.
+          </p>
+          <p>
+            At this point, if you open your Chrome developer tools, look at the <code>Network</code> tab, and then click on the search button, then you see that some requests are send (or have errors in the console if something is wrong).
+          </p>
+        </li>
+        <li>
+          <strong>Show the results</strong>
+          <p>
+            First, make sure that the <code>searchSuccess()</code> function is called (using <code>console.log</code>). You should also check out the content of the <code>data</code> parameter, which should have the same format as what you had on step 2.
+          </p>
+          <p>
+            <code>data</code> should contain an array named <code>business</code>. For each element in this array, you need to add a div to the <code>search-results</code> div (which is in <code>index.html</code>).
+            You need to display on the page the business image, name, price, and rating (just put the number for now, we'll show the stars in the next step). When adding text elements in the page, you should put them in a <code>span</code> element (e.g. create an element like <code>&ltspan&gtTacofino&lt/span&gt</code> for a restaurant name).
+          </p>
+            <p>
+              Be careful, if you create an element like this <code>$("&ltspan&gt" + business.price + "&lt/span&gt")</code> and <code>business.price</code> is <code>undefined</code> then you will actually see "undefined" written on the page. What you should do instead is create an element like this:  <code>$("&ltspan /&gt", { html: business.price })</code> and this will create an empty <code>span</code> element if the business has no price information (the <code>business</code> variable may have a different name in your code).
+          </p>
+          <p>
+            To be able to create the same layout as in the screenshot, you need to create a few extra div elements: <img src="results_structure.png" width="50%" style="display:block;">
+            Each color in the picture above matches a <code>div</code> element
+          </p>
+          <ul>
+            <li>each business (the red element) should have a flexbox display</li>
+            <li>the blue/purple div is a flexbox with a column direction and a width of 100%</li>
+            <li>the green div is a flexbox with a <code>justify-content: space-between;</code> rule.</li>
+          </ul>
+          <p>
+            The horizontal line separating each business is made by adding a border at the top of the business element, with some margin and padding.
+          </p>
+          <p>
+            Finally, you should make sure that the div containg the results is emptied when a new request is sent.
+          </p>
+        </li>
+        <li>
+          <strong>Show stars instead of the rating number</strong>
+          <p>
+          At this point you should have the same result as the image at the top of the instructions, but with a number instead of the stars.
+            The stars icons can be found in the <a href="http://fontawesome.io/icons/">font-awesome icons</a>. Instead of adding a span element with some text in it, you should start by creating an empty element (like this: <code>$("&ltspan /&gt")</code> and append to it as many star icons as needed:
+          </p>
+          <ul>
+            <li><code>Math.floor(business.rating)</code> is the number of full stars that you need to add.</li>
+            <li>you need to add a half-star if <code>Math.floor(business.rating)</code> is different than <code>business.rating</code>. </li>
+          </ul>
+        </li>
+        <li>
+          <strong>Show the error message</strong>
+          <p>
+            Last step, you should display errors to the user. In the <code>searchError</code> function, you should add an error message in the <code>error-message</code> div. This div should be emptied when a new request is sent. To force an error to happen, you can add an extra character at the end of your access token, and you should receive a response with the error code <code>401</code>. Don't forget to remove that extra character after.
+          </p>
+        </li>
+        <li>
+          <strong>Submit your work.</strong>
+          <p>
+            You know the drill :)
+          </p></li>
+      </ol>
+    </div>
+  </body>
+</html>

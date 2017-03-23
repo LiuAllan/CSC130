@@ -1,0 +1,32 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+.busDiv {
+  display:flex;
+}
+
+.pics {
+  height: 75px;
+}
+
+.temp {
+  display: flex;
+  background-color: 868585; 
+  justify-content: space-between;
+  width: 100%;
+}
+
+.priceRating {
+  width: 100%;
+}
+
+.busContainer {
+  background-color:#868585;
+  display:flex;
+  direction: column;
+  
+  margin-top: 5px;
+  padding: 5px;
+  border-top: 5px;
+}
