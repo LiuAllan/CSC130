@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thimble Project Tutorial</title>
+    <link rel="stylesheet" type="text/css" href="https://thimble.mozilla.org/tutorial/tutorial.css">
+  </head>
+
+  <body>
+    <div class="tutorial">
+      <h1>Lab 7: jQuery and serialization</h1>
+      <p>
+       In this lab, you will be making a page where you can add sticky notes, which will be saved in the browser's local storage (see GIF below)
+      </p>
+      
+      <img src="https://i.redd.it/37ehu3d80hiy.gif" width="100%">
+
+      <p>
+        A bit of HTML, CSS, and JavaScript code is already present in the project: the buttons are here, there is an empty <code>div</code> element that will contain the sticky notes, and <a href="https://learn.jquery.com/">jQuery</a> and our Javascript file are loaded in the page. 
+        The file <code>main.js</code> contains a few empty functions that you will need to complete to add the behavior seen above.
+      </p>
+      <p>
+        The <a href="http://fontawesome.io/">FontAwesome</a> stylesheet is also loaded in the page, allowing you to easily add icons.
+        FontAwesome is a CSS stylesheet that contains lots of icons. It is an alternative to using unicode characters. The advantage of using it is that the icons will look exactly the same for all users, and that they don't rely on the user having the proper fonts on their system. To add an icon, you need to load the fontAwesome stylesheet (see line 7 of the HTML file), and add a <code>i</code> element with the proper classes (see lines 18 and 22). You can search through the list of available icons <a href="http://fontawesome.io/icons/">here</a>.
+      </p>
+      
+      <h3>Step-by-Step Instructions</h3>
+      <ol class="steps">
+        <li>
+          <strong>Add a sticky note</strong>
+          <p>
+            When you click the "Add note" button, the function named <code>addNote()</code> should be called. Once you added the click handler, add a <code>console.log()</code>, in the addNote() function to check that it is called.
+          </p>
+          <p>As described in the comment above it, the <code>addNote()</code> function should create a new sticky note and append it to the <code>div</code> with the id <code>sticky-notes</code>. A sticky note is a <code>div</code> with the class <code>note</code>, which contains an icon (<a href="http://fontawesome.io/icon/times/">the times icon from FontAwesome</a>) and a <code>textarea</code> element.
+          </p>
+          <p>
+            If you dont add any CSS to your page, those div will not look like sticky notes. Add a few CSS rule sets to fix that:
+          </p>
+          <ul>
+            <li>The sticky notes container should be a flexbox with <code>flex-wrap</code> enabled</li>
+            <li>The sticky notes (the <code>div</code>s with the <code>note</code> class) should have a background color (I used <code>hsl(60, 89%, 50%);</code> but you can choose another color), should have a shadow, and be a flexbox with a column direction.</li>
+            <li>The sticky notes should have a minimum width and height of <code>200px</code>, and a <code>2px</code> margin around them.</li>
+            <li>The icon inside a sticky note shoud align itself to the right (using the <code>align-self</code> property)</li>
+            <li>The color of the icon should be a darker version of the background color.</li>
+            <li>The <code>textarea</code> inside the sticky note should use the same background color as its parent: you can use the rule <code>background-color: inherit;</code> to do this.</li>
+            <li>The textarea inside the sticky note should not have any border or outline (the outline shows when the textarea is focused).</li>
+            <li>The textarea inside the sticky note should use all the available height.</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Remove a sticky note</strong>
+          <p>
+            When you click on the close icon in a sticky note, it should remove it. Add a click handler on the icon when you are creating the sticky note (in the <code>addNote()</code> function).
+          </p>
+        </li>
+        <li>
+          <strong>Remove all sticky notes</strong>
+          <p>
+            Clicking on the "Remove all" button should call the <code>removeNotes()</code> function, which simply empties the <code>sticky-notes</code> <code>div</code>.
+          </p>
+        </li>
+        <li>
+          <strong>Save the sticky notes in the localStorage</strong>
+          <p>
+            At this point, the behavior of the page should be the same as on the GIF, except that when you reload the preview, all your sticky notes are gone.
+          </p>
+          <p>
+            In the <code>saveNotes()</code> function, you need to save the notes in the browser local storage. The only thing you need to save to be able to reload the notes later is the text that was entered in each <code>textarea</code>. To get the text contained in each textarea, you need to create a selector for all those text areas, and use the <a href="https://api.jquery.com/each/"><code>.each()</code> function</a> from jQuery. Look at the documentation of this function and the example provided. To get the content of a <code>textarea</code> (or any other input), you need to use the <code>.val()</code> method instead of the <code>.text()</code> method shown in the documentation's example (<code>.text()</code> retrieves the content of elements that are not inputs, e.g. list items, paragraphs, etc).
+          </p>
+          <p>
+            To summarize, in the <code>saveNotes()</code> function, you need to create a variable that contains an array, push to this array the text of each note, serialize this array with <code>JSON.stringify</code> and add it to the local storage (under a key named "notes" for instance).</p>
+          <p>
+            You need to call the <code>saveNotes()</code> function when notes are added, removed, or when a <code>textarea</code> is blurred.
+            Check the developer tools of your browser (in the "Application" tab in Chrome), as shown in the the lecture, to make sure that the saved value is correct, and don't forget to use <code>console.log()</code> to debug your code if needed.
+          </p>
+        </li>
+        <li>
+          <strong>Load the sticky notes from the local storage</strong>
+          <p>
+            When the page is loaded and the document is ready, you need to call the <code>loadNotes()</code> function, which should check if there are any notes in the local storage. If there are notes (i.e. if <code>localStorage.notes</code> is not <code>undefined</code>), then you should transform those back to a JavaScript array with <code>JSON.parse</code>, and create all the corresponding notes elements with some text in it.
+          </p>
+          <p>
+            To reuse as much code as possible, what you should do here is add a <code>text</code> parameter to the <code>addNote()</code> function, and inside the <code>addNote(text)</code> function, if <code>text</code> is not <code>undefined</code>, then you can set the text in the newly created textarea (<a href="http://lmgtfy.com/?q=how+to+change+textarea+text+with+jquery">here</a> is how you find how to change the text of a <code>textarea</code> ;) ). Then once you modified your <code>addNote()</code> method, you can call it for each element that was in the array stored in the local storage.
+          </p>
+        </li>
+        <li>
+          <strong>Submit your work</strong>
+          <p>
+            See the previous lab.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>

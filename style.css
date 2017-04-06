@@ -1,0 +1,52 @@
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+button {
+  font-size: larger;
+  margin: 2px;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+}
+
+button:hover {
+  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+#add-note {
+  background-color: hsl(222, 100%, 75%);
+  border: 1px solid hsl(222, 100%, 70%);
+}
+
+#remove-all {
+  background-color: hsl(0, 100%, 75%);
+  border: 1px solid hsl(0, 100%, 70%);
+}
+
+#sticky-notes {
+  display:flex;
+  flex-wrap: wrap;
+}
+
+.note {
+  display:flex;
+  background-color: hsl(60, 89%, 50%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  flex-direction:column;
+  min-width: 200px;
+  min-height: 200px;
+  margin: 2px;
+}
+
+#x {
+  align-self:flex-end;
+  color: hsl(60, 89%, 30%);
+}
+
+textarea {
+  background-color: inherit;
+  border:none;
+  outline:none;
+  height: 100%;
+}
+
+
