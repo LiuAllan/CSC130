@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thimble Project Tutorial</title>
+    <link rel="stylesheet" type="text/css" href="https://thimble.mozilla.org/tutorial/tutorial.css">
+  </head>
+
+  <body>
+    <div class="tutorial">
+      <h1>CSC 130 Lab 5 - CSS First Steps</h1>
+      <p>
+        Welcome to Thimble! Take a look around, see what the buttons do, and create an account if you want your work saved online (Thimble saves your work automatically).
+        If you do not want to use Thimble, you can use <a href="http://brackets.io/">Brackets</a> instead, it is a good code editor, but it is a bit more complex. Thimble is made for learning HTML and CSS.
+      </p>
+      <p>
+        The goal of this lab is going to change the CSS styles of our page to make it look like the image below (you are free to choose the colors). Don't worry, we are going to go step-by-step.
+For this lab we will only worry about making the page for a desktop. Design for mobile will come later.
+      </p>
+      <img width="100%" src="csc130lab5-result.png">
+      <h3>
+        CSS Syntax and Terminology
+      </h3>
+      <p>
+        A CSS <strong>rule-set</strong> consists of a selector and a declaration block:
+      </p>
+      <img src="http://www.w3schools.com/css/selector.gif" width="100%">
+      <p>
+        The <strong>selector</strong> points to the HTML element you want to style.<br>
+        The <strong>declaration block</strong> contains one or more declarations separated by semicolons.<br>
+
+        Each <strong>declaration</strong> includes a CSS property name and a value, separated by a colon.<br>
+
+        A CSS declaration always ends with a semicolon, and declaration blocks are surrounded by curly braces.<br>
+      </p>
+      <h3>
+        The CSS box model
+      </h3>
+      <p>
+        Go take a look at this page before going further: <a href="http://www.w3schools.com/css/css_boxmodel.asp">CSS Box Model</a>
+      </p>
+      <p>
+        The most important thing to remember from this page is: when you set the width and height properties of an element with CSS, you just set the width and height of the <strong>content area</strong>. To calculate the full size of an element, you must also add padding, borders and margins.
+      </p>
+      <h3>Step-by-Step Instructions</h3>
+      <ol class="steps">
+        <li>
+          <p>
+          The first step is to look at the html code I created for you, in <code>index.html</code>. You will see a few elements that I didn't introduce in the lecture. No problem, you can click on them and press <code>alt+k</code> to see the documentation for these elements. <code>alt+k</code> is going to be your best friend for a while, there are a lot of different HTML elements and CSS properties, each with a specific purpose. <strong>You should press <code>alt+k</code> each time you see a new element or property</strong>, it will give you even more information than these instructions, but also get you used to read HTML/CSS documentation.
+          </p>
+          <p>
+            Back to these new HTML elements: they correspond to standard parts of pages that you can see in most websites (unless the page is displaying a fullscreen video or game, is part of some kind of art project, or is just badly structured):
+          </p>
+          <ul>
+            <li>A <code>header</code>: usually a big strip across the top with a big heading and/or logo. This is where the main common information about a website usually stays from one webpage to another.
+            </li>
+            <li>
+              <code>nav</code> (navigation bar): links to the site's main sections; usually represented by menu buttons, links, or tabs. Like the header, this content usually remains consistent from one webpage to another.
+            </li>
+            <li>
+              <code>main</code>: a big area in the center that contains most of the unique content of a given webpage, for example the video you want to watch, or the main story you're reading, or the map you want to view, or the news headlines, etc. This is the one part of the website that definitely will vary from page to page!
+            </li>
+            <li><code>aside</code> (sidebar): some peripheral info, links, quotes, ads, etc. Usually this is contextual to what is contained in the main content (for example on a news article page, the sidebar might contain the author's bio, or links to related articles) but there are also cases where you'll find some recurring elements like a secondary navigation system.</li>
+            <li><code>footer</code>: a strip across the bottom of the page that generally contains fine print, copyright notices, or contact info. It's a place to put common information (like the header) but usually that information is not critical or secondary to the website itself. The footer is also sometimes used for SEO purposes, by providing links for quick access to popular content.</li>
+          </ul>
+          Before we start changing the style of these elements, make sure you understand which parts of the page match each part of the HTML code. You can use the <strong>element inspector</strong> (the button next to the ones that allow you to switch between mobile and desktop views) to click on a part of the preview, and the corresponding code will be highlighted.
+        </li>
+        <li>
+          <p>
+          Let's start styling our page, from the top. Open the <code>style.css</code> file. For now it is almost empty. The first thing we want to do is to change the background color of the page (usually you want something less bright than white). If you want a rule to apply to the whole page (e.g. <code>color</code>, <code>background-color</code>, <code>font-family</code>), then you need to apply these rules to the top-most element of your page, which is always <code>body</code>.
+          Therefore, what you need to do here is add a <code>background-color</code> property to the rule-set that applies to <code>body</code>, for instance <code>background-color: rgb(219, 219, 219)</code>.
+          </p>
+          <p>
+            Note that <code>rgb()</code> is a function. CSS has a few functions that are supported by all major browsers. The other function you will see a lot is <code>calc()</code>, which allows you to compute some properties (but we'll see this at the end of this lab).
+          </p>
+        </li>
+        <li>
+         <p>
+          Now that we have our background for the page, let's take care of the first element in it: the <code>header</code>. What you need to do is create a new CSS rule-set that applies to this <code>header</code> element. Below the rule-set of <code>body</code>, add that new rule-set. Since we are selecting an element only based on its type, the selector is just the type of the element we want to select (i.e., <code>header</code>).
+          </p>
+          <p>
+            There are two things we need to do with that header: center the text, and change its color.
+            The names of the properties that allow you to do that are <code>text-align</code> and <code>color</code>, respectively. Add one declaration for each of those properties (the text needs to be centered, and you can choose the color you want).
+          </p>
+        </li>
+        <li>
+          <p>Going down, the next element is the navigation bar (<code>nav</code>). Start by changing the background of the <code>nav</code> element (add a new rule-set). Once this is done, if you pay close attention to the left and right end of the navigation bar, you will see (with most browsers) that there is a small space between the edge of the navigation bar and the edge of the screen. You <em>could</em> try adding a declaration in the <code>nav</code> rule-set to set the <code>width</code> property at <code>100%</code>, so that <code>nav</code> takes all of the available space, <strong>but that is not going to change anything here.</strong></p>
+          <p>
+            <em>Here is what is going on here:</em> the <code>nav</code> element, as many other HTML elements, already tries by default to take all the available space. As <code>nav</code> is inside <code>body</code> (we also say that <code>body</code> is the parent of <code>nav</code>, or <code>nav</code> is a child of <code>body</code>), the only explanation is that <code>body</code> does not actually takes the whole page width. 
+          </p>
+          <p>
+            <em>Why is that?</em> Even before you started writing the CSS rules, the HTML elements of the page had already some styles applied to them (headers are larger, links are underlined, etc). That is because each browser has its own stylesheet (also called user-agent (UA) sylesheet). This is why a page that has no CSS associated to it might look a bit different from a browser to another (for instance, the default font is different between Firefox and Chrome). One of the things that browsers agree on is that the <code>body</code> element should have a margin (so that the text does not touch the screen edge), but we do not want this in our page.
+          </p>
+          <p>Since the stylesheet you write (called the author stylesheet) has precedence over the user-agent stylesheet, we can redefine the default CSS rules of the browser. <strong>What you need to do</strong> is simply add a <code>margin: 0;</code> declaration in the <code>body</code>'s rule-set, and the margin around the <code>body</code> will disappear.</p>
+          <p>
+            The last declaration we need to add to the <code>nav</code> element, is more space on top and bottom of the links that it contains. To add space between an element's border and its content, the <code>padding</code> property is the one to use.
+            Since we only want to add padding on the top and bottom, you need to use the <code>padding-top</code> and <code>padding-bottom</code> properties. Set a value of <code>10px</code> for both of these properties.
+          </p>
+        </li>
+        <li>
+          <p>
+            Next, we need to take care of the links inside of the <code>nav</code>. First, we need to figure out how to write the selector for those links. If we use the selector <code>a</code>, the rule-set is going to be applied to every link of the page, including the ones that are in the side bar.
+          </p>
+          <p>What we <em>could</em> do is to add a CSS class to those links, for instance <code>nav-link</code>, and use the <code>.nav-link</code> selector. But <strong>there is a better solution here</strong>: there is a way to write a selector for <q>all the <code>elementA</code> inside an <code>elementB</code></q>, and that is <code>elementB elementA</code></p>
+          <p>
+            Therefore, since what we want is to change the style of all the links (<code>a</code>) inside the navigation bar (<code>nav</code>), your new rule-set is going to look like this:
+          </p>
+          <code style='display:block;white-space:pre-wrap;'>nav a {
+}</code>
+          <p>
+            Let's start styling those links then: by default, links are underlined, to help the reader identify this part of the page as a link (this is why you shouldn't underline regular text on a webpage, otherwise the user will think it is a link).
+          </p>
+          <p>
+            To underline, overline, or strikethrough some text, the CSS property to use is <code>text-decoration</code> (<i>fun fact</i>: if you use <code>alt+k</code> to look at the documentation, which you should do all the time, this property even accepts a value named <code>blink</code>, that is supposed to make the text blink, but this value is ignored by most browsers nowadays, probably because it made users sick).<br>
+            Since we want to remove the existing underline, you need to add the following declaration: <code>text-decoration: none;</code>
+          </p>
+          <p>
+            The next two things are straightforward:
+          </p>
+
+          <ul>
+            <li>We want to increase the size of the text, so that is the property <code>font-size</code>. You can set it to <code>large</code>, and let your browser decide what size large text actually is (you can also try other values to see what happens).</li>
+            <li>You need to change the color of the text. You already did this for the header, so you should know that already.</li>
+        </ul>
+          <p>
+            The last step is to change the position of those links. Since there are four of them, we want each link to take 1/4 of the <code>nav</code>'s width. Therefore, the declaration you need to add (spoiler alert: it won't work yet) is <code>width: 25%;</code>. Go ahead and add it, and oh, surprise, nothing changes. ¯\_(ツ)_/¯
+          </p>
+          <p>
+            <em>What is going on here?</em> There is a very important property that we haven't seen yet: <code>display</code>. As the name indicates <code>display</code> controls how an element should be displayed. It can take a lot of values, but the most important ones to know are <code>inline</code>, <code>block</code>, and <code>inline-block</code>.
+          </p>
+          <ul>
+            <li><code>inline</code> is primarily intended for text (this is the default value for an <code>a</code> element for instance). An element with this value will be on the same line as the previous element, and allow the next element to be placed on the same line (i.e., it doesn't break the flow of text). You can set <code>margin</code> and <code>padding</code> on and inline element, but the surrounding text will only be pushed horizontally. An inline element will ignore <code>width</code> and <code>height</code></li>
+            <li><code>block</code> elements are usually container elements, such as <code>nav</code>, <code>div</code>, or <code>p</code>. Block elements break the flow of text: they start on a new line, and the next element will have to start on a new line. They try to take as much horizontal space as possible (as we saw with <code>nav</code>). </li>
+          <li><code>inline-block</code> elements are blocks that are inline. Since they are blocks, they can be resized, and since they are inline, they will allow other elements to be on the same line as them.</li>
+          </ul>
+          <p>
+            Therefore, since we want our links from the navigation bar to stay on the same line, while being able to resize them, you need to add the following declaration to the rule-set: <code>display: inline-block;</code> (you can try changing it to <code>block</code> for a moment, and you will see that the links will each be on one line). <strong>Be careful</strong>, <code>inline-block</code> elements will take into account the white-spaces in the HTML code. You can see that, in the <code>index.html</code> file, all the links of the <code>nav</code> element are on the same line, without space between them. If you put a space or a new line in the code between the <code>a</code> elements, it will add spaces on the page, and they will not fit on a single line anymore.
+          </p>
+          <p>
+            One last thing and we are done with the navigation bar: you need to center the text of the links. You should know how to do this already.
+          </p>
+        </li>
+        <li>
+          <p>Next step is to have the <code>article</code> and the <code>aside</code> side-by-side. Using <code>inline-block</code> won't work here, because the <code>aside</code> would try to have its text inline with the end of the <code>article</code>'s text, and would end up on the right, but at the bottom of the page. Instead we're going to use the <code>float</code> property. Start by adding the following code to your <code>style.css</code> file:</p>
+          
+          <code style='display:block;white-space:pre-wrap;'>article {
+  font-family: serif;
+  text-align: justify;
+  width: 58%;
+  padding-left: 2%;
+}
+
+aside {
+  background-color: coral;
+  width: 31%;
+  padding: 2%;
+}</code>
+          <p>
+            What this does is the following:
+          </p>
+          <ul>
+            <li>Sets the font of the article to a serif font, and justifies the text</li>
+            <li>Sets a total width of 60% for the article (56% for the content, and 2% of padding on the left and right sides)</li>
+            <li>Sets the background color of the side bar (you can change this one)</li>
+            <li>Sets a total width of 35% for the sidebar (31% for the content and 2% of padding on each side)</li>
+          </ul>
+          <p>
+            Note that the total width does not add up to 100%, that is on purpose, to leave a bit of space between the two.
+          </p>
+          <p>
+            At this point, the article and sidebar should both take less horizontal space, but they are still no on the same line. To do this, add the <code>  float: left;</code> declaration to both rule-sets. 
+          </p>
+          <p>
+            It's almost it, but we want the side bar to touch the right edge of the screen. To do this, you need to change the <code>float: left;</code> declaration to <code>float: right;</code> (only in the <code>aside</code> rule-set).
+            If you wanted, you could switch the article and side bar positions without even changing the HTML, by switching their <code>float</code> properties. (<code>article</code> would have <code>float: right;</code> and <code>aside</code> would have <code>float: left;</code>)
+          </p>
+        </li>
+        <li>
+          Let's take care of the sidebar content now. Do the following:
+          <ul>
+            <li>Align the text inside the sidebar to the right</li>
+            <li>Change the color of the links that are inside the sidebar</li>
+            <li>Change the <code>font-style</code> of those links to <code>italic</code></li>
+            <li>
+              Lists (<code>ul</code> elements) indent the text to the right by default, by using some padding. We do not need this padding here, and it is taking some space. Set the padding of that <code>ul</code> element to 0
+            </li>
+            <li>
+              List items (<code>li</code> elements) are using a special value for the <code>display</code> property. This is what creates the bullet point next to the list items. We do not want those bullet points, so set the <code>display</code> property of the list items to <code>block</code>
+            </li>
+            <li>
+              Add a bit of space (margin or padding, it doesn't matter here), on the botton of each list item, so that the list is less compact
+            </li>
+            <li>
+              Transform the image in the sidebar to a circle (you can also change the source of the image in the HTML code). You need to use the <code>border-radius</code> property to do this, and set it to <code>50%</code> (each corner will make an arc with a radius that is half of the image width). You can try other values to see what happens.
+            </li>
+            <li>
+              We also want the bottom-left corner of the sidebar to be rounded. Set the corresponding property (<code>border-bottom-left-radius</code>) to <code>10px</code>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>Last, but not least, the footer. Right now it should be hanging somewhere below the sidebar, and we want it at the bottom of the page. This is because of the floating elements, so we need to tell the footer that it shouldn't be positioned next to floating elements. To do so, add the following code:</p>
+<code style='display:block;white-space:pre-wrap;'>footer {
+  clear: both;
+}</code>
+          <p>
+            Our footer is now back to the bottom of the page. The <code>clear</code> properties defines whether floating elements are allowed to be next to the selected element. By default an element may have floating elements either left or right. Using the <code>both</code> value for this property ensures that both left and right sides of the element are clear of floats.
+          </p>
+          <p>
+            Now, we want to give it the same background and padding as the navigation bar, to keep some consistency in our page. Instead of copying the <code>nav</code> declarations in the <code>footer</code> rule-set we just created, we can replace the <code>nav</code> selector that we created in step 4 by the following: <code>nav, footer</code>. This notation allows you to reuse the same rule-set for multiple types of elements.
+          </p>
+          <p>
+            In a similar fashion, we want the same text color in the footer and in the links of the navigation bar, and we also want the text centered for both types of elements. Because our footer has theses two properties in common with the elements selected with <code>nav a</code>, you need to create a <strong>new rule-set</strong> that has the selector <code>nav a, footer</code>. Move the <code>color</code> and <code>text-align</code> selectors from the <code>nav a</code> rule-set to the one you just created.
+          </p>
+        </li>
+        
+        <li>
+          <p>
+            Your page should look good in the preview now. But if you switch to a fullscreen view, or resize the preview, you'll see that we have two problems: the paddings or the article and sidebar grow a lot, and the sidebar is also too large.
+          </p>
+          <p>
+            Let's take care of the paddings of the <code>article</code> and <code>aside</code> rule-sets first. Back in step 6, we added two declarations: <code>padding-left: 2%;</code> and <code>padding: 2%;</code>. Setting paddings or margins with percentage length is not recommended, because it means that that space if going to be very large on a wide screen, and very small on a mobile device. Having a very large empty space is useless, and having very small margins/padding may affect the readablilty of your page.
+          </p>
+          <p>
+            Therefore we need to set those paddings to fixed sizes in pixels. Replace both of these <code>2%</code> paddings by two <code>10px</code> paddings
+          </p>
+          <p>
+            We still want our <code>article</code> element to take 60% of the page's width (padding included). So the value of <code>width</code> should be 60% minus 10px. This is where the <code>calc()</code> function comes to the rescue.
+          </p>
+          <p>
+            <code>calc()</code> is a way to do simple math in CSS. It has four simple math operators: add (<code>+</code>), subtract (<code>-</code>), multiply (<code>*</code>), and divide (<code>/</code>). <strong>The most useful ability of <code>calc()</code> is its ability to mix units, like percentages and pixels.</strong>
+          </p>
+          <p>
+            Therefore, you need to put the following value for the <code>article</code>'s <code>width</code> property: <code>calc(60% - 10px)</code>.
+          </p>
+          <p>
+            Do something similar for the sidebar. Remember: we want the full width of the sidebar to be 35%, and it has a 10px padding on both sides.
+          </p>
+          <p>
+            That looks ok, but look at the fullscreen preview and you will see that the sidebar gets quite wide. 35% of a fullscreen width is too much for a sidebar. To limit how much the sidebar is going to expand, we can set the <code>max-width</code> property, and the element will never expand more than that. Set a maximum width of 200px for the sidebar's content.
+          </p>
+          <p>
+            Try switching to fullscreen again. The sidebar should not grow more than 220px (including the padding). There is an other problem tough: the article takes only 60% of the page, which leaves a big gap when the page is large enough. Therefore, what we need is to prevent the article to shrink more than <i>"100% of the page width" minus "the sidebar total width" minus "a few extra pixels to leave some space between the two"</i>.
+          </p>
+          <p>
+            Preventing an element from shrinking more than a specific size is the opposite of what we just did, so we need to use the <code>min-width</code> property. To get the correct value here, we need to use <code>calc()</code> again.
+          </p>
+          <p>
+            With this information in mind, we are now able to figure out the minimum width of our <code>article</code> element: it is <code>calc(100% - 220px - 40px)</code>. Add this minimum width to the <code>article</code>'s rule set.
+          </p>
+        </li>
+        <li>
+          Congratulations, you are done with this lab, now your page should look roughly like the one in the image at the beginning of these instructions. Copy all the content of your style.css file and submit it through connex to receive your five points.
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>

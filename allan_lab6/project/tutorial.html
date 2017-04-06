@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Thimble Project Tutorial</title>
+    <link rel="stylesheet" type="text/css" href="https://thimble.mozilla.org/tutorial/tutorial.css">
+  </head>
+
+  <body>
+    <div class="tutorial">
+      <h1>CSC130 Lab 6</h1>
+      <p>
+        In this lab you will see more advanced features of CSS, including element positioning, shadows, pseudo-classes, and media queries, to make a page that looks like this:
+        <img src="lab6-result.gif" style="width:100%" >
+      </p>
+    
+
+      <h3>Step-by-Step Instructions</h3>
+      <ol class="steps">
+        <li>
+          <strong>Use a flexbox layout for the nav bar</strong>
+          <p>
+            Change the <code>nav</code> rule-set to use a <code>flex</code> layout that tries to keeps as much space as possible around the content.
+          </p>
+        </li>
+        <li>
+          <strong>
+            Hide the text of the nav bar links on mobile, and show the third link only on mobile
+          </strong>
+          <p>
+            The text of the links takes too much space on mobile, and the third button, that links to the side bar content, is not necessary on desktop as the side-bar is readily visible. To change the styles that are applied based on the screen size, you need to use a <code>@media</code> query. We will write the syles for mobile first, and then put the desktop styles in the <code>@media</code> query.
+          </p>
+          <p>
+            To hide an element, we can use the <code>display: none;</code> rule. What we want to hide here is only the text of the first two links, not the emoji. You need to modify the HTML code to do this, and add a new inline element around the text (<code>&ltspan&gt</code> is the generic inline element), like so: <code> 🍈&ltspan&gt Veggie ipsum&lt/span&gt</code>. Now you can add a class to this <code>span</code> element (name it <code>hidden-mobile</code>), and add the CSS rule-set that hides it.
+          </p>
+          <p>
+            Now, you need to show the text if you are on a screen that is large enough (at least <code>480px</code> wide). <strong>At the bottom of your CSS file</strong>, add the following media query:
+            <code style='display:block;white-space:pre-wrap;'>@media screen and (min-width: 480px) {
+  /* Add your CSS rule-sets here */
+}</code>
+            The content of the media query will only be read by the browser if its size is at least <code>480px</code>. Add a rule-set for the <code>hidden-mobile</code> class in order to display the elements on a desktop.
+          </p>
+          <p>
+            We want to hide the third link of the nav bar on desktop. Add a CSS class to it (call it <code>hidden-desktop</code>) and add the proper CSS rule-set in the media query
+          </p>
+        </li>
+        <li>
+          <strong>
+            Change the links styles on hover
+          </strong>
+          <p>
+            Use the <code>:hover</code> pseudo-class to make the background color of the links brighter on hover. The normal background color is <code>hsl(210, 100%, 70%);</code>, so if you want a brighter version of this color, you only need to increase the value of the third parameter (as the <code>l</code> in <code>hsl</code> stands for luminosity).
+          </p>
+          <p>
+            Add a shadow to the button: <code>box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);</code>.
+            Take a look at the documentation of box-shadow <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow">here</a>, and tweak some values to see how the shadow changes. You can also find a box-shadow generator <a href="http://www.cssmatic.com/box-shadow">here</a>.
+          </p>
+        </li>
+        <li>
+          <strong>
+            Keep the nav bar on top of the viewport
+          </strong>
+          <p>
+            Set a <code>fixed</code> position to the <code>nav</code> element, so that it is always visible on top of the screen, even when you scroll down.
+          </p>
+          <p>
+            Because the <code>nav</code> doesn't follow the flow of the page anymore, the <code>main</code> element is starting at the very top of the page, and the first few lines of text are hidden behind the nav bar. To fix this, you need to add a <code>40px</code> margin (same as the nav bar height) on top of the <code>main</code> element.
+          </p>
+          <p>
+            To add a bit of depth to the page, and make it look like the text is sliding behind the navigation bar, add a shadow to the <code>nav</code> element.
+          </p>
+        </li>
+        <li>
+          <strong>
+            Change the <code>main</code> element layout on desktop
+          </strong>
+          <p>
+            On mobile, the layout of the page is already correct: the <code>aside</code> element, is at the bottom of the page. On desktop mode though, we want it on the side of the page with a width of <code>200px</code>. Add a CSS rule-set that changes the <code>main</code> to a flexbox on desktop, and a CSS rule-set that sets the size of the side bar to <code>200px</code>. The flexbox is going to shrink the side bar below <code>200px</code> to leave as little empty space as possible, so you need to tweak the <code>flex-shrink</code> property of the side bar to prevent this. See the previous lecture, or <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">this page</a> for a reminder on flexbox.
+          </p>
+        </li>
+        <li>
+          <strong>Make the links work</strong>
+          <p>
+            Each link is supposed to redirect you to a specific section of the page (the two <code>article</code> elements, and the side-bar, respectively). Making a link to a specific section of a page works as follows:
+          </p>
+          <ol>
+            <li>Add an id to the element you want to link to: <code>&lth2 id="tips"&gtUseful Tips Section&lt/h2&gt</code></li>
+            <li>Add link with an <code>href</code> attribute that matches the id of the element: <code>&lta href="#tips"&gtVisit the Useful Tips Section&lt/a&gt</code></li>
+          </ol>
+          <p>
+            Do something similar with the three links in the navigation bar. When you click on the links, the page should scroll to the start of the text of each article.
+          </p>
+          <p>
+            There should be a small bug at this point: the page does scroll at the start of each article, but the first lines are hidden behind the navigation bar (You should see <a href="bugged-link.png">this</a>, but you want to see <a href="fixed-link.png">this</a>.). To solve this, you need to add an invisible element that will serve as an anchor point. Before the article that contains the veggie ipsum, add an empty <code>span</code> element, and move the id attribute from the <code>article</code> to this <code>span</code> element. Add a class named <code>anchor</code> to the <code>span</code> element, and the following rule-set to your CSS code:
+          </p>
+          <code style='display:block;white-space:pre-wrap;'>.anchor {
+  display: block;
+  height: 40px; /*same height as header*/
+  margin-top: -40x; /*same height as header*/
+  visibility: hidden;
+}</code>
+          <p>
+            This should fix it for the first link. Repeat the same procedure for the other two.
+          </p>
+        </li>
+        <li>
+          <strong>Submit your work on connex</strong>
+          <p>
+            Export your project as a zip file (the menu with your user name, on the top right of the thimble website), and upload it to submit your assignment in connex.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </body>
+</html>
